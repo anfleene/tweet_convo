@@ -11,5 +11,11 @@ exports.init = ->
   SS.server.app.init (response) ->
     $('#message').text(response)
 
-  # Start the Quick Chat Demo
-  SS.client.demo.init()
+  $("form#tweet").submit ->
+    tweetId = $("input#tweetId").val()
+
+    SS.server.app.sendTweet {id : tweetId}, (response) ->
+      if response.error then alert(response.error) else $("input#tweetId").val("")
+    false
+
+  SS.client.tweet.init()
